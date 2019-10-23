@@ -92,7 +92,6 @@ public class EditCommand extends Command {
 
         model.setBookmark(bookmarkToEdit, editedBookmark);
         model.applyAllTaggers();
-        model.saveMark(String.format(MESSAGE_EDIT_BOOKMARK_SUCCESS, editedBookmark));
         model.updateFilteredBookmarkList(PREDICATE_SHOW_ALL_BOOKMARKS);
         return new CommandResult(String.format(MESSAGE_EDIT_BOOKMARK_SUCCESS, editedBookmark));
     }
@@ -113,6 +112,11 @@ public class EditCommand extends Command {
         List<CachedCopy> unchangedCachedCopies = bookmarkToEdit.getCachedCopies();
 
         return new Bookmark(updatedName, updatedUrl, updatedRemark, updatedFolder, updatedTags, unchangedCachedCopies);
+    }
+
+    @Override
+    public boolean isUndoable() {
+        return true;
     }
 
     @Override
